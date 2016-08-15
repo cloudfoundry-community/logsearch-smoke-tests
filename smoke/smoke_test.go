@@ -41,7 +41,7 @@ var _ = Describe("Logsearch", func() {
 	It("can see app messages in the elasticsearch", func() {
 		Eventually(cf.Cf("start", appName), 5*60*time.Second).Should(Exit(0))
 
-		testUri := elaticUri(elasticEndpoint) + "/" + config.ElasticsearchAppIndex + "*/_search?q=" + appName
+		testUri := fmt.Sprintf(elaticUri(elasticEndpoint)+"/"+config.ElasticsearchAppIndex+"*/_search?q="+"'%s'", appName)
 
 		fmt.Println("Curling url: ", testUri)
 
