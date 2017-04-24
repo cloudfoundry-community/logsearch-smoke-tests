@@ -2,12 +2,13 @@ package smoke
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/pborman/uuid"
 
-	"github.com/cloudfoundry-incubator/cf-test-helpers/cf"
-	"github.com/cloudfoundry-incubator/cf-test-helpers/runner"
+	"github.com/pivotal-cf-experimental/cf-test-helpers/cf"
+	"github.com/pivotal-cf-experimental/cf-test-helpers/runner"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -41,11 +42,18 @@ var _ = Describe("Logsearch", func() {
 	It("can see app messages in the elasticsearch", func() {
 		Eventually(cf.Cf("start", appName), 5*60*time.Second).Should(Exit(0))
 
-		testUri := fmt.Sprintf(elaticUri(elasticEndpoint)+"/"+config.ElasticsearchAppIndex+"*/_search?q="+"'%s'", appName)
+		current_time := time.Now().Local()
+
+		testUri := fmt.Sprintf(
+			elaticUri(elasticEndpoint)+"/"+config.ElasticsearchAppIndex+
+				"-"+ctx.RegularUserContext().Org+
+				"-"+ctx.RegularUserContext().Space+
+				"-"+"%v"+"/_search?q=@cf.app:"+"%s",
+			current_time.Format("2006.01.02"), appName)
 
 		fmt.Println("Curling url: ", testUri)
 
-		curl := runner.Curl(testUri).Wait(timeout)
+		curl := runner.Curl(strings.ToLower(testUri)).Wait(timeout)
 		Expect(curl).To(Exit(0))
 		elasticResponse := string(curl.Out.Contents())
 

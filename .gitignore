@@ -24,3 +24,4 @@ _testmain.go
 *.prof
 
 assets/logsearch-example-app/manifest.yml
+config.json

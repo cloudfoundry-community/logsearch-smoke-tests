@@ -29,6 +29,7 @@ Below is an example `integration_config.json`:
 {
   "api":                              "api.example.com",
   "apps_domain":                      "example.com",
+  "system_domain":                    "example.com",
   "admin_user":                       "admin",
   "admin_password":                   "admin",
   "skip_ssl_validation":              true
