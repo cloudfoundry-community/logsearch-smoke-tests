@@ -1,0 +1,20 @@
+
+[[dependencies]]
+  branch = "master"
+  name = "github.com/Sirupsen/logrus"
+
+[[dependencies]]
+  branch = "master"
+  name = "github.com/onsi/ginkgo"
+
+[[dependencies]]
+  branch = "master"
+  name = "github.com/onsi/gomega"
+
+[[dependencies]]
+  branch = "master"
+  name = "github.com/pborman/uuid"
+
+[[dependencies]]
+  branch = "master"
+  name = "github.com/pivotal-cf-experimental/cf-test-helpers"

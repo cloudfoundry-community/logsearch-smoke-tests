@@ -1,0 +1,43 @@
+memo = ""
+
+[[projects]]
+  branch = "master"
+  name = "github.com/Sirupsen/logrus"
+  packages = ["."]
+  revision = "3ec0642a7fb6488f65b06f9040adc67e3990296a"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/onsi/ginkgo"
+  packages = [".","config"]
+  revision = "bb93381d543b0e5725244abe752214a110791d01"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/onsi/gomega"
+  packages = [".","gexec"]
+  revision = "c463cd2a8578290d4be7a25cba69de81cf35785e"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/pborman/uuid"
+  packages = ["."]
+  revision = "b984ec7fa9ff9e428bd0cf0abf429384dfbe3e37"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/pivotal-cf-experimental/cf-test-helpers"
+  packages = ["cf","runner","services"]
+  revision = "980d4ed0a607c84d55e58c82f98739061a32054b"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9"
+
+[[projects]]
+  branch = "v2"
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  revision = "a3f3340b5840cee44f372bddb5880fcbc419b46a"
