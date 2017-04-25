@@ -1,7 +1,9 @@
 package smoke
 
 import (
+	"bytes"
 	"fmt"
+	"html/template"
 	"strings"
 	"time"
 
@@ -26,8 +28,24 @@ var _ = Describe("Logsearch", func() {
 		return uuid.NewRandom().String()
 	}
 
-	elaticUri := func(elasticEndpoint string) string {
+	elasticURI := func(elasticEndpoint string) string {
 		return "http://" + config.ElasticsearchMasterIpAddress + ":" + config.ElasticsearchMasterPort
+	}
+
+	elasticIndex := func(raw string) (string, error) {
+		tpl, err := template.New("index").Parse(raw)
+		var buf bytes.Buffer
+		if err != nil {
+			return "", err
+		}
+		if err := tpl.Execute(&buf, map[string]interface{}{
+			"Org":   ctx.RegularUserContext().Org,
+			"Space": ctx.RegularUserContext().Space,
+			"Time":  time.Now().Local(),
+		}); err != nil {
+			return "", err
+		}
+		return buf.String(), nil
 	}
 
 	BeforeEach(func() {
@@ -42,23 +60,17 @@ var _ = Describe("Logsearch", func() {
 	It("can see app messages in the elasticsearch", func() {
 		Eventually(cf.Cf("start", appName), 5*60*time.Second).Should(Exit(0))
 
-		current_time := time.Now().Local()
+		index, err := elasticIndex(config.ElasticsearchAppIndex)
+		Expect(err).NotTo(HaveOccurred())
 
-		testUri := fmt.Sprintf(
-			elaticUri(elasticEndpoint)+"/"+config.ElasticsearchAppIndex+
-				"-"+ctx.RegularUserContext().Org+
-				"-"+ctx.RegularUserContext().Space+
-				"-"+"%v"+"/_search?q=@cf.app:"+"%s",
-			current_time.Format("2006.01.02"), appName)
+		testURI := elasticURI(elasticEndpoint) + "/" + index + "/_search?q=@cf.app:" + appName
+		fmt.Println("Curling url: ", testURI)
 
-		fmt.Println("Curling url: ", testUri)
-
-		curl := runner.Curl(strings.ToLower(testUri)).Wait(timeout)
+		curl := runner.Curl(strings.ToLower(testURI)).Wait(timeout)
 		Expect(curl).To(Exit(0))
 		elasticResponse := string(curl.Out.Contents())
 
 		Eventually(elasticResponse).Should(ContainSubstring(appName))
 		fmt.Println("\n")
 	})
-
 })

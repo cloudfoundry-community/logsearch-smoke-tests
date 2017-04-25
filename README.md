@@ -32,6 +32,7 @@ Below is an example `integration_config.json`:
   "system_domain":                    "example.com",
   "admin_user":                       "admin",
   "admin_password":                   "admin",
+  "elasticsearch_app_index":          "logs-app-{{.Org}}-{{.Space}}-{{.Time.Format \"2006.01.02\"}}",
   "skip_ssl_validation":              true
 }
 ```
