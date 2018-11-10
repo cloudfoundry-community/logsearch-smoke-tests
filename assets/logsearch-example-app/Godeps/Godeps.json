@@ -1,7 +1,7 @@
 {
-	"ImportPath": "github.com/infra-red/logsearch-go-app",
-	"GoVersion": "go1.6",
-	"GodepVersion": "v74",
+	"ImportPath": "github.com/cloudfoundry-community/logsearch-smoke-tests/assets/logsearch-example-app",
+	"GoVersion": "go1.11",
+	"GodepVersion": "v80",
 	"Deps": [
 		{
 			"ImportPath": "github.com/Sirupsen/logrus",
