@@ -71,6 +71,6 @@ var _ = Describe("Logsearch", func() {
 		elasticResponse := string(curl.Out.Contents())
 
 		Eventually(elasticResponse).Should(ContainSubstring(appName))
-		fmt.Println("\n")
+		fmt.Println()
 	})
 })
