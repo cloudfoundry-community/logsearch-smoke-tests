@@ -50,7 +50,7 @@ var _ = Describe("Logsearch", func() {
 
 	BeforeEach(func() {
 		appName = randomName()
-		Eventually(cf.Cf("push", appName, "-m", "128M", "-p", appPath, "-u", "none", "-no-start"), config.ScaledTimeout(timeout)).Should(Exit(0))
+		Eventually(cf.Cf("push", appName, "-m", "128M", "-p", appPath, "-u", "none", "--no-start"), config.ScaledTimeout(timeout)).Should(Exit(0))
 	})
 
 	AfterEach(func() {
