@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/cloudfoundry-community/logsearch-smoke-tests/assets/logsearch-example-app",
-	"GoVersion": "go1.15",
+	"GoVersion": "go1.16",
 	"GodepVersion": "v80",
 	"Deps": [
 		{
